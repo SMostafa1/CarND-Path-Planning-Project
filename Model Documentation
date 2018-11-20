@@ -1,0 +1,18 @@
+First I defined a path made up of (x,y) points that the car will visit sequentially every .02 seconds
+	1- Get main car localization data (x,y, yaw)
+	2-if it is the the 1st readings I used car steering as a reference point to evaluate previous x,y of car to make path tangent to car 		  and I stored it in a vector for each points to x and y
+        3-If I have previous points I redefined reference state as previous path and points, I used these 2 points to make path tangent to the previous paths's points
+
+
+Then In Frenet I added 30 cm spaced points ahead of starting reference points line 333 to 335, using reference velocity calculated
+
+Then I shift to car reference to angle 0 and create spline
+
+Using all of the previous path points from last time instead of creating new path each time, I filled up the rest of path planner after filling it with previous points(always output 50 points)
+
+
+Check collision and Reference velocity calculation:
+1- find reference velocity in car lane using data in sensor_fusion vector
+2- get didtance between my car and other cars in my lane
+3-given that lane width is 4m I tried to figure if the distance between my car and other cars is between 4 to 8 m, if the other car speed is greater than my car speed then car is considered too close, so my car deaccelerate and set lane to zero in order to change lane (this will imapct frenet)
+
